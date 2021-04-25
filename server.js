@@ -1,8 +1,6 @@
-const express = require("express");
 const mongoose = require("mongoose");
 const WilderModel = require("./models/Wilder");
 const wilderController = require("./controllers/wilder");
-const app = express();
 
 //Database
 mongoose
@@ -14,20 +12,3 @@ mongoose
   })
   .then(() => console.log("Connected to database"))
   .catch((err) => console.log(err));
-
-//Middleware
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-//Routes
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
-
-app.post("/api/wilder/create", wilderController.create);
-app.get("/api/wilder/read", wilderController.read);
-app.put("/api/wilder/update", wilderController.update);
-app.delete("/api/wilder/delete", wilderController.delete);
-
-//Start Server
-app.listen(5000, () => console.log("Server started on 5000"));
