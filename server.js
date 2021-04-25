@@ -2,6 +2,8 @@ const { ApolloServer, gql } = require("apollo-server");
 
 const mongoose = require("mongoose");
 
+const WilderModel = require("./models/Wilder");
+
 //Database
 mongoose
   .connect("mongodb://127.0.0.1:27017/wilderdb", {
@@ -32,7 +34,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    allWilders: () => [],
+    allWilders: () => WilderModel.find(),
   },
 };
 
