@@ -30,11 +30,41 @@ const typeDefs = gql`
   type Query {
     allWilders: [Wilder]
   }
+  input InputWilder {
+    name: String!
+    city: String!
+  }
+  type Mutation {
+    createWilder(input: InputWilder): Wilder
+  }
 `;
 
 const resolvers = {
   Query: {
     allWilders: () => WilderModel.find(), // to test in playground: {allWilders {name, city, skills {title, votes}}}
+  },
+  Mutation: {
+    createWilder: async (parent, args) => {
+      /* To test in playground:
+      mutation CreateWilder($input: InputWilder) {
+        createWilder(input: $input) {
+          id, name, city
+        }
+      }
+
+      Query Variables:
+      {
+        "input": {
+          "name": "GraphQL Wilder",
+          "city": "Space"
+        }
+      }
+      */
+      await WilderModel.init();
+      const wilder = new WilderModel(args.input);
+      const result = await wilder.save();
+      return result;
+    },
   },
 };
 
