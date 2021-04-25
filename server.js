@@ -34,7 +34,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    allWilders: () => WilderModel.find(),
+    allWilders: () => WilderModel.find(), // to test in playground: {allWilders {name, city, skills {title, votes}}}
   },
 };
 
